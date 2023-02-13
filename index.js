@@ -13,6 +13,7 @@ const openai = new OpenAIApi(configuration);
 
 app.use(express.json());
 app.use((req, res, next) => {
+  console.log("Hit cors");
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -25,6 +26,8 @@ app.use(express.static(path.join(__dirname, "build")));
 app.post("/api/generate", async (req, res) => {
   const prompt = req.body.prompt;
   console.log("Hit");
+
+  console.log(process.env.OPENAI_API_KEY);
 
   try {
     const completion = await openai.createCompletion({
