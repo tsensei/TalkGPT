@@ -13,7 +13,6 @@ const openai = new OpenAIApi(configuration);
 
 app.use(express.json());
 app.use((req, res, next) => {
-  console.log("Hit cors");
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -25,7 +24,6 @@ app.use(express.static(path.join(__dirname, "build")));
 
 app.post("/api/generate", async (req, res) => {
   const prompt = req.body.prompt;
-  console.log("Hit");
 
   try {
     const completion = await openai.createCompletion({
@@ -33,7 +31,7 @@ app.post("/api/generate", async (req, res) => {
       prompt: prompt,
       max_tokens: 300,
     });
-    console.log("Got");
+
     res.status(200).json({
       status: "success",
       message: completion.data.choices[0].text,
